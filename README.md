@@ -2,9 +2,6 @@ Chrome Bookmarks Online
 =======================
 
 
-Overview
---------
-
 This project allows you to have an online copy of your Google Chrome bookmarks.
 You just need a regular Dropbox account for accessing bookmarks page through a Dropbox public folder.
 
