@@ -9,6 +9,5 @@ Installation
 ------------
 
 * Under the Dropbox public folder create a `bookmarks` folder and put these files in there
-* In `update.bat` check paths to a bookmarks files
-* Add `update.bat` to `Task Scheduler` in your OS in order keep bookmarks updated
-* Access your bookmarsk from URL: `http://dl.dropbox.com/u/<your dopbox ID>/bookmarks/index.html`
+* Create in your OS new task in task scheduler for copying bookmarks to a Dropbox folder. For Windows users: you can modify my `update.bat` and add it to a task scheduler.
+* Access your bookmarsk from URL: `http://dl.dropbox.com/u/<DopboxID>/bookmarks/index.html`
