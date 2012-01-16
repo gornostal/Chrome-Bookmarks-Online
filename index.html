@@ -12,7 +12,7 @@
 <script>
     $(function() {
         var $bm = $('#bm');
-        $bm.CromeBookmarks('bookmarks.json', function(){
+        $bm.CromeBookmarks('Bookmarks', function(){
             $bm.treeview({
                 animated:  "fast",
 		collapsed: true,
@@ -52,14 +52,21 @@
                 
                 return ret;
             }
-            
+
+            var cacheBuster = Math.round(new Date()/(1000*60));
             $.ajax({
                 url: url,
+                data: {cb: cacheBuster},
                 dataType: 'json',
                 success: function(data){
                     $(that).html(getBookmarks(data.roots));
                     if (typeof callback == 'function') {
                         callback();
+                    }
+                },
+                error: function(resp) {
+                    if (resp.status == 404) {
+                        $(that).text("File '" + url + "' not found!").css('color', 'red');
                     }
                 }
             });
