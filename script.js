@@ -1,15 +1,3 @@
-;(function($){
-    
-    $(function(){
-        var $bm = $('#bookmarks');
-        $bm.CromeBookmarks('Bookmarks', {
-            persist: true,
-            loadFavicons: false,
-            search: $('form:first')
-        });
-    });
-})(jQuery);
-
 /** 
  * CromeBookmarks plugin 
  */
@@ -17,12 +5,15 @@
     $.fn.CromeBookmarks = function (url, options) {
         var that = this;
         var defaults = {
-            persist: true,
             loadFavicons: false,
             cookieid: 'chrome-bookmarks',
-            search: null // form selector
+            search: $('form:first') // form selector
         };
         options = $.extend({}, defaults, options);
+        
+        if (options.loadFavicons) {
+            $(that).show();
+        }
         
         var dataIndex = [];
         var inSearch = false;
@@ -68,7 +59,7 @@
                     var id = 'item-'+arr[i];
                     var parent = $('#'+id).parent();
                     if (parent.length) {
-                        parent.addClass('open');
+                        parent.addClass('open').loadFavicons();
                         ret[id] = arr[i];
                     }
                 }
@@ -96,7 +87,7 @@
                     delete opened['item-'+id];
                 }
             } else {
-                li.addClass('open');
+                li.addClass('open').loadFavicons();
                 opened['item-'+id] = id;
             }
             saveOpened();
@@ -123,10 +114,11 @@
             }
             
             var openItem = function(obj) {
-                $('#item-'+obj.id)
+                var elem = $('#item-'+obj.id)
                     .addClass('hl')
                     .parents('li')
-                    .addClass('open');
+                    .addClass('open')
+                    .loadFavicons();
             }
             
             var search = function(){
@@ -179,7 +171,30 @@
                 }
             }
         });
+        
+        $.fn.loadFavicons = function(){
+            if (!options.loadFavicons) {
+                return;
+            }
+            $(this).find('a:visible').not('.folder').each(function(){
+                var url = $(this).attr('href');
+                var link = $(this);
+                try {
+                    var host = /(http[s]?:\/\/[a-z-_0-9\.]+)/i.exec(url);
+                    if (host.length > 1) {
+                        url = host[1] + '/favicon.ico';
+                        link.css({
+                            'background-image': "url('" + url + "')",
+                            'background-position': 'left',
+                            'background-size': '16px 16px'
+                        });
+                    }
+                } catch (e) {}
+            });
+        }
+        
     }
+    
 })(jQuery);
 
 
