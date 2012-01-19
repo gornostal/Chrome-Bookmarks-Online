@@ -7,73 +7,20 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Chrome Bookmarks</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="jquery.treeview.js"></script>
-<link href="jquery.treeview.css" rel="stylesheet" type="text/css" />
-<script>
-    $(function() {
-        var $bm = $('#bm');
-        $bm.CromeBookmarks('Bookmarks', function(){
-            $bm.treeview({
-                animated:  "fast",
-		collapsed: true,
-                persist:   "cookie",
-		cookieId:  "chrome-bookmarks"
-            });
-        })
-    });
-    (function($){
-        $.fn.CromeBookmarks = function (url, callback) {
-            var that = this;
-            
-            var getBookmarks = function(data){
-                var ret = '';
-                
-                for (var i in data) {
-                    if ('type' in data[i] && 'name' in data[i] && data[i].name != 'Synced bookmarks') {
-                        
-                        var type = data[i].type == 'folder' ? 'folder' : 'file';
-                        var span = '<span class="' + type + '">';
-                        if (type == 'folder') {
-                            span += data[i].name;
-                        } else {
-                            span += '<a href="' + data[i].url + '">' + data[i].name + '</a>';
-                        }
-                        span += '</span>';
-                        var li = '<li>' + span;
-                        
-                        if (type == 'folder' && data[i].children.length) {
-                            li += '<ul>' + getBookmarks(data[i].children) + '</ul>';
-                        }
-                        li += '</li>';
-
-                        ret += li;
-                    }
-                }
-                
-                return ret;
-            }
-
-            var cacheBuster = Math.round(new Date()/(1000*60));
-            $.ajax({
-                url: url,
-                data: {cb: cacheBuster},
-                dataType: 'json',
-                success: function(data){
-                    $(that).html(getBookmarks(data.roots));
-                    if (typeof callback == 'function') {
-                        callback();
-                    }
-                },
-                error: function(resp) {
-                    if (resp.status == 404) {
-                        $(that).text("File '" + url + "' not found!").css('color', 'red');
-                    }
-                }
-            });
-        }
-    })(jQuery)
-</script>
+<script type="text/javascript" src="script.js"></script>
+<link href="style.css" rel="stylesheet" type="text/css" />
 <body>
-    <h1>Chrome Bookmarks</h1>
-    <ul id="bm" class="filetree"></ul>
+    <header>
+        <h1>Chrome Bookmarks</h1>
+        <form action="" method="get">
+            <fieldset>
+                <legend>Search</legend>
+                <input type="text" name="query" placeholder="Search" />
+                <input type="submit" value="Search" />
+                <a href="#" class="clr_search" title="Clear search" ></a>
+            </fieldset>
+        </form>
+    </header>
+    
+    <ul id="bookmarks"></ul>
 </body>

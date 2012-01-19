@@ -1,0 +1,139 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ul, ol, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+header {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    list-style: none;
+}
+
+body {
+    color: #333;
+    font-size: 13px;
+    line-height: 20px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+header {
+    background-color: whiteSmoke;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#f9f9f9), to(#f5f5f5));
+    background-image: -moz-linear-gradient(#f9f9f9, #f5f5f5);
+    background-image: -ms-linear-gradient(#f9f9f9, #f5f5f5);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f9f9f9), color-stop(100%, #f5f5f5));
+    background-image: -webkit-linear-gradient(#f9f9f9, #f5f5f5);
+    background-image: -o-linear-gradient(#f9f9f9, #f5f5f5);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#f5f5f5', GradientType=0)";
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#f5f5f5', GradientType=0);
+    background-image: linear-gradient(#f9f9f9, #f5f5f5);
+    border-bottom: 1px solid #EEE;
+    
+    margin-bottom: 10px;
+}
+header h1 {
+    color: #999;
+    line-height: 18px;
+    text-align: center;
+    padding: 9px 0;
+    text-transform: uppercase;
+}
+input[type="text"] {
+    -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+    -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+    -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
+    -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+    transition: border linear 0.2s, box-shadow linear 0.2s;
+    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    
+    display: block;
+    height: 18px;
+    padding: 4px;
+    font-size: 13px;
+    line-height: 18px;
+    color: gray;
+    border: 1px solid #CCC;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border-image: initial;
+    
+    vertical-align: baseline;
+
+    width: 174px;
+    margin-bottom: 5px;
+    padding-left: 26px;
+    
+    background: white url(icons.png) 5px 5px no-repeat;
+}
+fieldset {
+    width: 200px;
+    margin: 0 auto;
+    display: block;
+    position: relative;
+    width: 200px;
+}
+fieldset a.clr_search {
+    background: url('icons.png') no-repeat 0 -25px;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: 8px;
+    right: 0;
+    display: none;
+}
+input:focus, textarea:focus {
+    outline: 0;
+    border-color: rgba(82, 168, 236, 0.8);
+    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+    -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+legend, input[type="submit"] {
+    display: none;
+}
+
+#bookmarks {
+    padding: 0 15px;
+    display: none;
+}
+#bookmarks a {
+    cursor: pointer;
+    color: #4183C4;
+    text-decoration: none;
+    background: url('icons.png') no-repeat -1px -101px;
+    padding-left: 22px;
+}
+#bookmarks a:hover {
+    text-decoration: underline;
+}
+#bookmarks a:visited {
+    color: #551A8B;
+}
+#bookmarks .folder > a {
+    background: url('icons.png') no-repeat 0 -75px;
+}
+#bookmarks .folder.open > a {
+    background: url('icons.png') no-repeat 0 -49px;
+    color: black;
+}
+#bookmarks ul {
+    margin-left: 20px;
+    height: 0px;
+    overflow: hidden;
+}
+#bookmarks li.folder.open > ul {
+    height: auto;
+}
