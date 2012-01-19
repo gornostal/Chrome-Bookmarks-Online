@@ -131,9 +131,26 @@ legend, input[type="submit"] {
 }
 #bookmarks ul {
     margin-left: 20px;
-    height: 0px;
-    overflow: hidden;
+    display: none;
 }
 #bookmarks li.folder.open > ul {
     height: auto;
+    display: block;
+}
+
+
+#bookmarks.insearch ul,
+#bookmarks.insearch a {
+    display: none;
+}
+#bookmarks.insearch .folder > a {
+    text-decoration: none;
+    cursor: default;
+}
+#bookmarks.insearch .open > ul,
+#bookmarks.insearch .open > a {
+    display: block;
+}
+#bookmarks a.hl {
+    display: block;
 }

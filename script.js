@@ -4,7 +4,8 @@
         var $bm = $('#bookmarks');
         $bm.CromeBookmarks('Bookmarks', {
             persist: true,
-            loadFavicons: false
+            loadFavicons: false,
+            search: $('form:first')
         });
     });
 })(jQuery);
@@ -18,9 +19,13 @@
         var defaults = {
             persist: true,
             loadFavicons: false,
-            cookieid: 'chrome-bookmarks'
+            cookieid: 'chrome-bookmarks',
+            search: null // form selector
         };
         options = $.extend({}, defaults, options);
+        
+        var dataIndex = [];
+        var inSearch = false;
 
         var getBookmarks = function(data){
             var ret = '';
@@ -33,6 +38,13 @@
                         url       = type == 'folder' ? 'javascript:void(0);' : data[i].url,
                         a         = '<a id="item-' + data[i].id + '" data-item="' + data[i].id + '" href="' + url + '">' + data[i].name + '</a>',
                         li        = '<li ' + className + '>' + a;
+                    
+                    dataIndex[dataIndex.length] = {
+                        id: data[i].id,
+                        type: type,
+                        name: data[i].name,
+                        url: type == 'folder' ? '' : data[i].url
+                    };
 
                     if (type == 'folder' && data[i].children.length) {
                         li += '<ul>' + getBookmarks(data[i].children) + '</ul>';
@@ -71,6 +83,10 @@
             $.cookie(options.cookieid, arr.join(','));
         }
         var toggleFolder = function(){
+            if (inSearch) {
+                return false;
+            }
+            
             var id = $(this).data('item');
             var li = $(this).parent();
             var open = li.hasClass('open') ? true : false;
@@ -86,6 +102,62 @@
             saveOpened();
             return false;
         }
+        
+        var initSearch = function($form){
+            var input = $form.find('input[name="query"]');
+            var cancel = $('a.clr_search');
+            
+            cancel.click(function(){
+                input.val('')
+                clear();
+                return false;
+            });
+            
+            var clear = function(){
+                $(that).removeClass('insearch');
+                $('a', that).removeClass('hl');
+                $('li', that).removeClass('open');
+                opened = getOpened();
+                inSearch = false;
+                cancel.hide();
+            }
+            
+            var openItem = function(obj) {
+                $('#item-'+obj.id)
+                    .addClass('hl')
+                    .parents('li')
+                    .addClass('open');
+            }
+            
+            var search = function(){
+                var val = input.val();
+                if (val.length > 2) {
+                    $(that).addClass('insearch');
+                    $('a', that).removeClass('hl');
+                    $('li', that).removeClass('open');
+                    inSearch = true;
+                    
+                    try {
+                        var pattern = new RegExp(val, 'i');
+                        for (var i = 0; i < dataIndex.length; i++) {
+                            if (pattern.test(dataIndex[i].name) || pattern.test(dataIndex[i].url)) {
+                                openItem(dataIndex[i]);
+                            }
+                        }
+                    } catch (e) {}
+                    
+                } else {
+                    clear();
+                }
+                cancel.show();
+            }
+            
+            input.bind('keyup', search);
+            $form.submit(function(){
+                search();
+                return false; 
+            });
+        }
 
         var cacheBuster = Math.round(new Date()/(1000*60));
         $.ajax({
@@ -97,6 +169,9 @@
                 $('.folder > a', that).click(toggleFolder);
                 opened = getOpened();
                 $(that).css({display: 'block'});
+                if (options.search) {
+                    initSearch(options.search);
+                }
             },
             error: function(resp) {
                 if (resp.status == 404) {
