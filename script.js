@@ -141,7 +141,9 @@
                 } else {
                     clear();
                 }
-                cancel.show();
+                if (val.length) {
+                    cancel.show();
+                }
             }
             
             input.bind('keyup', search);
