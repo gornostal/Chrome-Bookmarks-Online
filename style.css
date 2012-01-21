@@ -154,3 +154,9 @@ legend, input[type="submit"] {
 #bookmarks a.hl {
     display: block;
 }
+
+#imgpreload {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}

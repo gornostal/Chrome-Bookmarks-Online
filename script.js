@@ -178,18 +178,26 @@
             if (!options.loadFavicons) {
                 return;
             }
-            $(this).find('a:visible').not('.folder').each(function(){
+            
+            var preloader = $('<div id="imgpreload" />').appendTo($('body'));
+            $(this).find('> ul > li > a').not('.folder').each(function(){
                 var url = $(this).attr('href');
                 var link = $(this);
                 try {
                     var host = /(http[s]?:\/\/[a-z-_0-9\.]+)/i.exec(url);
                     if (host.length > 1) {
                         url = host[1] + '/favicon.ico';
-                        link.css({
-                            'background-image': "url('" + url + "')",
-                            'background-position': 'left',
-                            'background-size': '16px 16px'
-                        });
+                        $('<img>').load(function(){
+                            if ($(this).width()){ 
+                                link.css({
+                                    'background-image': "url('" + url + "')",
+                                    'background-position': 'left',
+                                    'background-size': '16px 16px'
+                                });
+                            }
+                        })
+                        .attr('src', url)
+                        .appendTo(preloader);
                     }
                 } catch (e) {}
             });
