@@ -27,7 +27,8 @@
                     var type      = data[i].type == 'folder' ? 'folder' : 'file',
                         className = type == 'folder' ? 'class="folder"' : '',
                         url       = type == 'folder' ? 'javascript:void(0);' : data[i].url,
-                        a         = '<a id="item-' + data[i].id + '" data-item="' + data[i].id + '" href="' + url + '">' + data[i].name + '</a>',
+                        a         = '<a id="item-' + data[i].id + '" data-item="'
+                                + data[i].id + '" href="' + url + '">' + (data[i].name || '(no label)') + '</a>',
                         li        = '<li ' + className + '>' + a;
                     
                     dataIndex[dataIndex.length] = {
@@ -95,8 +96,9 @@
         }
         
         var initSearch = function($form){
-            var input = $form.find('input[name="query"]');
-            var cancel = $('a.clr_search');
+            var input = $form.find('input[name="query"]'),
+                cancel = $('a.clr_search'),
+                keyPressTimeout;
             
             cancel.click(function(){
                 input.val('')
@@ -114,7 +116,7 @@
             }
             
             var openItem = function(obj) {
-                var elem = $('#item-'+obj.id)
+                $('#item-'+obj.id)
                     .addClass('hl')
                     .parents('li')
                     .addClass('open')
@@ -146,7 +148,10 @@
                 }
             }
             
-            input.bind('keyup', search);
+            input.bind('keyup', function(){
+                clearTimeout(keyPressTimeout);
+                keyPressTimeout = setTimeout(search, 1e3);
+            });
             $form.submit(function(){
                 search();
                 return false; 
