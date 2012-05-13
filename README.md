@@ -10,7 +10,7 @@ Installation
 
 * Under the Dropbox public folder create a `bookmarks` folder and put these files in there
 * Create in your OS new task in task scheduler for copying `Bookmarks` file to the Dropbox folder. 
-For Windows users: `Bookmarks` file located in `C:\Users\<Username>\AppData\Local\Google\Chrome\User Data\Default\Bookmarks`
+For Windows users this file located in `C:\Users\<Username>\AppData\Local\Google\Chrome\User Data\Default\Bookmarks`, for Linux users — `/home/<Username>/.config/google-chrome/Default/Bookmarks`
 * Access your bookmarsk from URL: `http://dl.dropbox.com/u/<DopboxID>/bookmarks/index.html`
 
 Configuration
