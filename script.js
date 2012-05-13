@@ -15,8 +15,10 @@
             $(that).show();
         }
         
-        var dataIndex = [];
-        var inSearch = false;
+        var dataIndex = [],
+            inSearch = false,
+            found = false,
+            $notice = $('<div>').addClass('notice').appendTo('body');
 
         var getBookmarks = function(data){
             var ret = '';
@@ -113,6 +115,7 @@
                 opened = getOpened();
                 inSearch = false;
                 cancel.hide();
+                $notice.hide();
             }
             
             var openItem = function(obj) {
@@ -130,16 +133,23 @@
                     $('a', that).removeClass('hl');
                     $('li', that).removeClass('open');
                     inSearch = true;
-                    
+                    found = false;
+                    $notice.hide();
+
                     try {
                         var pattern = new RegExp(val, 'i');
                         for (var i = 0; i < dataIndex.length; i++) {
                             if (pattern.test(dataIndex[i].name) || pattern.test(dataIndex[i].url)) {
                                 openItem(dataIndex[i]);
+                                found = true;
                             }
                         }
                     } catch (e) {}
-                    
+
+                    if (!found) {
+                        $notice.text('No matching results').show();
+                    }
+
                 } else {
                     clear();
                 }
