@@ -9,8 +9,8 @@ Installation
 ------------
 * [Download](https://github.com/gornostal/Chrome-Bookmarks-Online/zipball/master) or clone the project.
 * Under the Dropbox public folder create a `bookmarks` folder and put these files in there
-* Open that folder and make a symlink to `/home/<Username>/.config/google-chrome/Default/Bookmarks`. If you are on Windows, create new task in task scheduler for copying `Bookmarks` file to the Dropbox folder. File located in `C:\Users\<Username>\AppData\Local\Google\Chrome\User Data\Default\Bookmarks`.
-* Access your bookmarsk from URL: `http://dl.dropbox.com/u/<DopboxID>/bookmarks/index.html`
+* Create in your OS new task in a task scheduler for copying `Bookmarks` file to the Dropbox folder. For Windows users this file is located in `C:\Users\<Username>\AppData\Local\Google\Chrome\User Data\Default\Bookmarks`, for Linux users — `/home/<Username>/.config/google-chrome/Default/Bookmarks` (don't make symbolic links for Dropbox, because it not syncing them properly)
+* Access your bookmarks from URL: `http://dl.dropbox.com/u/<DopboxID>/bookmarks/index.html`
 
 Configuration
 -------------
