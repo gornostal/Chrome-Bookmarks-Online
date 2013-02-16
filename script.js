@@ -24,6 +24,9 @@
             var ret = '';
 
             for (var i in data) {
+                if (typeof data[i] !== 'object') {
+                    continue;
+                }
                 if ('type' in data[i] && 'name' in data[i] && data[i].name != 'Synced bookmarks') {
 
                     var type      = data[i].type == 'folder' ? 'folder' : 'file',
